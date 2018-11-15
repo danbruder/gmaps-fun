@@ -9,7 +9,7 @@ import loadGoogleMapsApi from 'load-google-maps-api';
 
 //registerServiceWorker();
 loadGoogleMapsApi({
-  key: process.env.GMAPS_KEY,
+  key: process.env.ELM_APP_GMAPS_KEY,
 })
   .then(initMap)
   .catch(function(error) {
