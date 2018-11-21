@@ -1,6 +1,8 @@
 module Model exposing (Model)
 
+import Browser
+
 
 type alias Model =
-    { hello : String
+    { zoom : Int
     }

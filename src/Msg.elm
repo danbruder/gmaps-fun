@@ -8,3 +8,4 @@ type Msg
     = NoOp
     | UrlChanged Url
     | LinkClicked Browser.UrlRequest
+    | SetZoomToNineteen
