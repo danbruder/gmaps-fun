@@ -10,3 +10,4 @@ type Msg
     | LinkClicked Browser.UrlRequest
     | SetZoomToNineteen
     | ZoomChanged Int
+    | LocateUserOnMap

@@ -11,7 +11,7 @@ customElements.define(
       super();
       this._map = null;
       this._loaded = false;
-      this._zoom = 3;
+      this._zoom = 17;
       this._geocoder = null;
     }
 
@@ -50,7 +50,7 @@ customElements.define(
             if (mousedUp === false) {
               this.geocodeLatLng(event.latLng);
             }
-          }, 500);
+          }, 800);
         });
         googleMaps.event.addListener(this._map, 'mouseup', function(event) {
           mousedUp = true;
@@ -103,6 +103,48 @@ customElements.define(
           window.alert('Geocoder failed due to: ' + status);
         }
       });
+    }
+
+    // Try HTML5 geolocation.
+    locateUserOnMap() {
+      console.log('locating...');
+      var infoWindow = new googleMaps.InfoWindow();
+
+      const handleLocationError = (browserHasGeolocation, iw, pos) => {
+        iw.setPosition(pos);
+        iw.setContent(
+          browserHasGeolocation
+            ? 'Error: The Geolocation service failed.'
+            : "Error: Your browser doesn't support geolocation.",
+        );
+        iw.open(this._map);
+      };
+
+      if (navigator.geolocation) {
+        console.log('looking for position...');
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            console.log('found position!');
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(this._map);
+
+            this._map.setZoom(19);
+            this._map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infoWindow, this._map.getCenter());
+          },
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, this._map.getCenter());
+      }
     }
   },
 );

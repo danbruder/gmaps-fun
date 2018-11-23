@@ -8,10 +8,13 @@ var app = Elm.Main.init({
   node: document.getElementById('root'),
 });
 
-//app.ports.initMap.subscribe(function(data) {
-//initMap()
-//.then(r => console.log(r))
-//.catch(r => console.log(r));
-//});
+app.ports.locateUserOnMap.subscribe(function(data) {
+  var el = document.getElementById('map');
+  if (!el) {
+    console.log('no element');
+    return;
+  }
+  el.locateUserOnMap();
+});
 
 //registerServiceWorker();
