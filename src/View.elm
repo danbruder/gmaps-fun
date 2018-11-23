@@ -31,7 +31,6 @@ view model =
                     (Decode.field "detail" Decode.int)
                 )
             ]
-        , rightDrawer model
         ]
     }
 
@@ -56,8 +55,8 @@ topNav =
                     ]
                 ]
             , nav [ class "db dtc-ns v-mid w-100 tl tr-ns mt2 mt0-ns" ]
-                [ a [ class "f6 fw6 hover-blue link black-70 mr2 mr3-m mr4-l dib", href "/docs/", title "Documentation" ]
-                    [ text "Docs      " ]
+                [ span [ class "f6 fw6 hover-blue link black-70 mr2 mr3-m mr4-l dib pointer", onClick SetZoomToNineteen ]
+                    [ text "Set zoom to 19" ]
                 ]
             ]
         ]
@@ -66,5 +65,4 @@ topNav =
 rightDrawer : Model -> Html Msg
 rightDrawer model =
     div [ class "z-1  mw6 absolute top-0 right-0 p3 bg-white vh-100 shadow-4 w-100" ]
-        [ button [ class "mt5", onClick SetZoomToNineteen ] [ text "Set zoom to 19" ]
-        ]
+        []
