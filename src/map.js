@@ -20,6 +20,7 @@ customElements.define(
         this._map = new googleMaps.Map(this, {
           zoom: this._zoom,
           center: {lat: 42.870888, lng: -85.865234},
+          gestureHandling: 'greedy',
         });
 
         //googleMaps.event.addListener(this._map, 'mousedown', function(event) {});
