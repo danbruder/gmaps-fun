@@ -4,7 +4,8 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Json.Encode as JE
+import Json.Decode as Decode
+import Json.Encode as Encode
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 
@@ -22,19 +23,17 @@ view model =
     { title = "HomScout"
     , body =
         [ topNav
-        , elmMap [ zoom model.zoom ]
+        , elmMap
+            [ property "zoom"
+                (Encode.int model.zoom)
+            , on "zoom_changed"
+                (Decode.map ZoomChanged
+                    (Decode.field "detail" Decode.int)
+                )
+            ]
         , rightDrawer model
         ]
     }
-
-
-zoom : Int -> Html.Attribute msg
-zoom howMuch =
-    property "zoom" (JE.int howMuch)
-
-
-
---property "zoom" (JE.int howMuch)
 
 
 elmMap : List (Html.Attribute msg) -> Html msg

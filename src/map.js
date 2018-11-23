@@ -24,6 +24,12 @@ customElements.define(
 
         //googleMaps.event.addListener(this._map, 'mousedown', function(event) {});
         this._loaded = true;
+        this._map.addListener('zoom_changed', () => {
+          var value = this._map.getZoom();
+          if (this._zoom === value) return;
+          this._zoom = value;
+          this.sendEvent('zoom_changed', value);
+        });
       });
     }
 
@@ -40,6 +46,14 @@ customElements.define(
 
     disconnectedCallback() {
       // Do something?
+    }
+
+    /**
+     * Dispatch an event.
+     */
+    sendEvent(name, detail) {
+      this.dispatchEvent(new CustomEvent(name, {detail}));
+      console.log('[map]', name, detail);
     }
   },
 );

@@ -9,3 +9,4 @@ type Msg
     | UrlChanged Url
     | LinkClicked Browser.UrlRequest
     | SetZoomToNineteen
+    | ZoomChanged Int

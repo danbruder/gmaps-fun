@@ -10,5 +10,8 @@ update msg model =
         SetZoomToNineteen ->
             ( { model | zoom = 19 }, Cmd.none )
 
+        ZoomChanged zoom ->
+            ( { model | zoom = zoom }, Cmd.none )
+
         _ ->
             ( model, Cmd.none )
