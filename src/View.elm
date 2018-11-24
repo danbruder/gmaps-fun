@@ -10,14 +10,6 @@ import Model exposing (Model)
 import Msg exposing (Msg(..))
 
 
-
---view : Model -> Browser.Document Msg
---view model =
---{ title = "Title"
---, body = [ model |> layout ]
---}
-
-
 view : Model -> Document Msg
 view model =
     { title = "HomScout"

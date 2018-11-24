@@ -50,19 +50,17 @@ customElements.define(
             if (mousedUp === false) {
               this.geocodeLatLng(event.latLng);
             }
-          }, 800);
+          }, 500);
         });
         googleMaps.event.addListener(this._map, 'mouseup', function(event) {
           mousedUp = true;
         });
-        googleMaps.event.addListener(this._map, 'drag', function(event) {
+        googleMaps.event.addListener(this._map, 'bounds_changed', function(
+          event,
+        ) {
           mousedUp = true;
         });
       });
-    }
-
-    get zoom() {
-      return this._zoom;
     }
 
     set zoom(value) {
@@ -105,9 +103,7 @@ customElements.define(
       });
     }
 
-    // Try HTML5 geolocation.
     locateUserOnMap() {
-      console.log('locating...');
       var infoWindow = new googleMaps.InfoWindow();
 
       const handleLocationError = (browserHasGeolocation, iw, pos) => {
@@ -121,7 +117,6 @@ customElements.define(
       };
 
       if (navigator.geolocation) {
-        console.log('looking for position...');
         navigator.geolocation.getCurrentPosition(
           position => {
             console.log('found position!');
@@ -142,7 +137,6 @@ customElements.define(
           },
         );
       } else {
-        // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, this._map.getCenter());
       }
     }

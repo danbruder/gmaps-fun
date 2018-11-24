@@ -11,7 +11,7 @@ var app = Elm.Main.init({
 app.ports.locateUserOnMap.subscribe(function(data) {
   var el = document.getElementById('map');
   if (!el) {
-    console.log('no element');
+    // THROW AN ERROR HERE
     return;
   }
   el.locateUserOnMap();
