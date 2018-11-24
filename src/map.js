@@ -79,13 +79,14 @@ customElements.define(
      */
     sendEvent(name, detail) {
       this.dispatchEvent(new CustomEvent(name, {detail}));
-      console.log('[map]', name, detail);
     }
 
     geocodeLatLng(latlng) {
       var marker = new googleMaps.Marker({
         position: latlng,
         map: this._map,
+        //icon:
+        //'https://cdn4.iconfinder.com/data/icons/feather/24/circle-512.png',
       });
 
       var infowindow = new googleMaps.InfoWindow();
@@ -119,7 +120,6 @@ customElements.define(
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
-            console.log('found position!');
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,

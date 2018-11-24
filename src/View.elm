@@ -1,6 +1,7 @@
 module View exposing (view)
 
 import Browser exposing (Document)
+import FeatherIcons
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -47,8 +48,10 @@ topNav =
                     ]
                 ]
             , nav [ class "db dtc-ns v-mid w-100 tl tr-ns mt2 mt0-ns" ]
-                [ span [ class "f6 fw6 hover-blue link black-70 mr2 mr3-m mr4-l dib pointer", onClick LocateUserOnMap ]
-                    [ text "Find me" ]
+                [ div [ class "f6 fw6 hover-blue link black-70 mr2 mr3-m mr4-l dib pointer", onClick LocateUserOnMap ]
+                    [ FeatherIcons.mapPin
+                        |> FeatherIcons.toHtml []
+                    ]
                 ]
             ]
         ]
