@@ -125,11 +125,7 @@ customElements.define(
               lng: position.coords.longitude,
             };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(this._map);
-
-            this._map.setZoom(19);
+            this._map.setZoom(16);
             this._map.setCenter(pos);
           },
           () => {

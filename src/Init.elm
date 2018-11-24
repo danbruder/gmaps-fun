@@ -8,7 +8,7 @@ import Url
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-    ( { zoom = 3
+    ( { zoom = 13
       }
     , Cmd.none
     )
