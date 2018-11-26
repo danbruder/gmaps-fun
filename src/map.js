@@ -50,7 +50,7 @@ customElements.define(
             if (mousedUp === false) {
               this.geocodeLatLng(event.latLng);
             }
-          }, 500);
+          }, 700);
         });
         googleMaps.event.addListener(this._map, 'mouseup', function(event) {
           mousedUp = true;
@@ -58,6 +58,15 @@ customElements.define(
         googleMaps.event.addListener(this._map, 'bounds_changed', function(
           event,
         ) {
+          mousedUp = true;
+        });
+        googleMaps.event.addListener(this._map, 'drag', function(event) {
+          mousedUp = true;
+        });
+        googleMaps.event.addListener(this._map, 'dragstart', function(event) {
+          mousedUp = true;
+        });
+        googleMaps.event.addListener(this._map, 'dragend', function(event) {
           mousedUp = true;
         });
       });
