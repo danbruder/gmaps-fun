@@ -4,6 +4,8 @@ import '@webcomponents/custom-elements';
 const key = 'AIzaSyDyfTrLPc8DeeRpUY3QGaWTgKhtrJ2_Sxc';
 var googleMaps = null;
 
+var locationError = false;
+
 customElements.define(
   'elm-map',
   class RenderedHtml extends HTMLElement {
@@ -11,8 +13,9 @@ customElements.define(
       super();
       this._map = null;
       this._loaded = false;
-      this._zoom = 17;
+      this._zoom = 12;
       this._geocoder = null;
+      this._my_location_marker = null;
     }
 
     connectedCallback() {
@@ -69,6 +72,11 @@ customElements.define(
         googleMaps.event.addListener(this._map, 'dragend', function(event) {
           mousedUp = true;
         });
+
+        this.locateUserOnMap(true);
+        setInterval(() => {
+          this.locateUserOnMap(false);
+        }, 3000);
       });
     }
 
@@ -113,8 +121,11 @@ customElements.define(
       });
     }
 
-    locateUserOnMap() {
+    locateUserOnMap(setCenter = false) {
       var infoWindow = new googleMaps.InfoWindow();
+      if (locationError) {
+        return;
+      }
 
       const handleLocationError = (browserHasGeolocation, iw, pos) => {
         iw.setPosition(pos);
@@ -134,8 +145,20 @@ customElements.define(
               lng: position.coords.longitude,
             };
 
-            this._map.setZoom(16);
-            this._map.setCenter(pos);
+            let data =
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAAQlBMVEVMaXFCiv9Civ9Civ9Civ9Civ9Civ9Civ9Civ+Kt/9+r/9Pkv90qf9hnf9Civ9wpv9Ee/+Jtf9Gjf9/sP9Kj/9KXf+JdfukAAAACXRSTlMAGCD7088IcsuTBctUAAAAYUlEQVR4XlWOWQrAIBBDx302d73/VSu0UMxfQsgLAMSEzmGKcGRCkZylBHPyMJQmk44QIRWdVCuxlgQoRNLaoi4ILs/a9m6VszuGf4PSaX21eyD6oZ256/AHa/0L9RauOw+4XAWqGLX26QAAAABJRU5ErkJggg==';
+            if (!this._my_location_marker) {
+              this._my_location_marker = new google.maps.Marker({
+                map: this._map,
+                position: pos,
+                icon: data,
+              });
+            } else {
+              this._my_location_marker.setPosition(pos);
+            }
+            if (setCenter) {
+              this._map.setCenter(pos);
+            }
           },
           () => {
             handleLocationError(true, infoWindow, this._map.getCenter());

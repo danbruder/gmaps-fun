@@ -14,7 +14,7 @@ app.ports.locateUserOnMap.subscribe(function(data) {
     // THROW AN ERROR HERE
     return;
   }
-  el.locateUserOnMap();
+  el.locateUserOnMap(true);
 });
 
 //registerServiceWorker();
